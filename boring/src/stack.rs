@@ -4,6 +4,7 @@ use libc::size_t;
 use std::borrow::Borrow;
 use std::convert::AsRef;
 use std::fmt;
+use std::iter;
 use std::marker::PhantomData;
 use std::mem;
 use std::ops::{Deref, DerefMut, Index, IndexMut, Range};
@@ -62,7 +63,7 @@ impl<T: Stackable> Stack<T> {
     }
 }
 
-impl<T: Stackable> IntoIterator for Stack<T> {
+impl<T: Stackable> iter::IntoIterator for Stack<T> {
     type IntoIter = IntoIter<T>;
     type Item = T;
 
@@ -280,7 +281,7 @@ impl<T: Stackable> IndexMut<usize> for StackRef<T> {
     }
 }
 
-impl<'a, T: Stackable> IntoIterator for &'a StackRef<T> {
+impl<'a, T: Stackable> iter::IntoIterator for &'a StackRef<T> {
     type Item = &'a T::Ref;
     type IntoIter = Iter<'a, T>;
 
@@ -289,7 +290,7 @@ impl<'a, T: Stackable> IntoIterator for &'a StackRef<T> {
     }
 }
 
-impl<'a, T: Stackable> IntoIterator for &'a mut StackRef<T> {
+impl<'a, T: Stackable> iter::IntoIterator for &'a mut StackRef<T> {
     type Item = &'a mut T::Ref;
     type IntoIter = IterMut<'a, T>;
 
@@ -298,7 +299,7 @@ impl<'a, T: Stackable> IntoIterator for &'a mut StackRef<T> {
     }
 }
 
-impl<'a, T: Stackable> IntoIterator for &'a Stack<T> {
+impl<'a, T: Stackable> iter::IntoIterator for &'a Stack<T> {
     type Item = &'a T::Ref;
     type IntoIter = Iter<'a, T>;
 
@@ -307,7 +308,7 @@ impl<'a, T: Stackable> IntoIterator for &'a Stack<T> {
     }
 }
 
-impl<'a, T: Stackable> IntoIterator for &'a mut Stack<T> {
+impl<'a, T: Stackable> iter::IntoIterator for &'a mut Stack<T> {
     type Item = &'a mut T::Ref;
     type IntoIter = IterMut<'a, T>;
 
